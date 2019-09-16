@@ -22,7 +22,7 @@ CREATE TABLE products (
   PRIMARY KEY (item_id)
 );
 
-//Creates new rows containing data in all named columns --
+//Creates new rows containing data in all named columns
 INSERT INTO products (item_id, product_name, department_name, price, stock_quantity, PRIMARY KEY)
 VALUES ("Jenga", "Games & Accessories", 5.75, 100), 
 ("LEGO Harry Potter Advent Calendar", "Games & Accessories", 32.99, 100),
@@ -32,14 +32,7 @@ VALUES ("Jenga", "Games & Accessories", 5.75, 100),
 ("Just Ask!: Be Different, Be Brave, Be You Hardcover", "Books", 11.15, 100),
 ("The Wonky Donkey Paperback", "Books", 4.99, 100),
 ("HD Indoor Wireless Smart Home Camera with Night Vision, 2-Way Audio, Person Detection, Works with Alexa & the Google Assistant", "Electronics", 25.99, 100),
-("Jenga", "Games & Accessories", 5.75, 100),
-("Jenga", "Games & Accessories", 5.75, 100),
-("Jenga", "Games & Accessories", 5.75, 100);
-
-
-
-//Updates the row where the column name is ??
-UPDATE products
-//SET has_pet = true, pet_name = "Franklin", pet_age = 2
-//WHERE name = "Peter";
+("Clump & Seal Platinum Cat Litter", "Pets", 24.99, 100),
+("Earth Rated Dog Poop Bags, Extra Thick and Strong Poop Bags for Dogs", "Pets", 11.99, 100),
+("Fire 7 Kids Edition Tablet, Blue Kid-Proof Case", "Electronics", 199.99, 100);
 
