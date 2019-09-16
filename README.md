@@ -1,2 +1,0 @@
-# bamazon
-Created with CodeSandbox
