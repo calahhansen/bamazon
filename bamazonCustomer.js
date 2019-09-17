@@ -24,17 +24,53 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId);
-  displayProduct();
+  askUser();
 });
+
+function askUser() {
+  inquirer
+    .prompt({
+      name: "action",
+      type: "list",
+      message: "What would you like to do?",
+      choices: [
+        "View all products",
+        "Search for product by ID and view quantity available",
+        "exit"
+      ]
+    })
+    .then(function(answer) {
+      switch (answer.action) {
+        case "View all products":
+          displayProduct();
+          break;
+
+        case "Search for product by ID and view quantity available":
+          searchProduct();
+          break;
+
+        // case "Find data within a specific range":
+        //   rangeSearch();
+        //   break;
+
+        // case "Search for a specific song":
+        //   songSearch();
+        //   break;
+
+        case "exit":
+          connection.end();
+          break;
+      }
+    });
+}
+
 // Display/Read all of the product items for sale and include ids, product names, depts, prices and quantity of product
 function displayProduct() {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
     console.log(res);
-
     // logs the actual query being run
     console.log(query.sql);
-
     //prompt user with two messages
 
     //The first should ask them the ID of the product they would like to buy.
