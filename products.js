@@ -28,8 +28,8 @@ function createProduct() {
     {
       product_name: "",
       department_name: "",
-      price: ,
-      stock_quantity: 
+      price: "",
+      stock_quantity: ""
     },
     function(err, res) {
       if (err) throw err;

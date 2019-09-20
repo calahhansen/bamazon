@@ -17,11 +17,11 @@ const connection = mysql.createConnection({
 
   // Your password
   password: "root",
-  database: "products_db"
+  database: "bamazon_db"
 });
 
 //Use the connect method on the object "connection".  The method argument is a callback function that will result in an error or console log that the database is connected.
-connection.connect(function(err) {
+connection.connect(function (err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId);
   askUser();
@@ -36,10 +36,11 @@ function askUser() {
       choices: [
         "View all products",
         "Search for product by ID and view quantity available",
+        "Place Order",
         "exit"
       ]
     })
-    .then(function(answer) {
+    .then(function (answer) {
       switch (answer.action) {
         case "View all products":
           displayProduct();
@@ -47,6 +48,10 @@ function askUser() {
 
         case "Search for product by ID and view quantity available":
           searchProduct();
+          break;
+
+        case "Place Order":
+          orderProduct();
           break;
 
         // case "Find data within a specific range":
@@ -66,18 +71,51 @@ function askUser() {
 
 // Display/Read all of the product items for sale and include ids, product names, depts, prices and quantity of product
 function displayProduct() {
-  connection.query("SELECT * FROM products", function(err, res) {
+  connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw err;
     console.log(res);
+    askUser();
     // logs the actual query being run
-    console.log(query.sql);
+    // console.log(query.sql);
     //prompt user with two messages
 
     //The first should ask them the ID of the product they would like to buy.
 
     //The second message should ask how many units of the product they would like to buy.
 
-    //END of the connection.
-    connection.end();
+
   });
 }
+
+function orderProduct() {
+  inquirer.prompt([{
+    name: "id",
+    type: "input",
+    message: "What is the product ID?"
+  }
+    , {
+    name: "amount",
+    type: "input",
+    message: "How many items would you like to purchase?"
+  }
+  ]
+  )
+    .then(function (answer) {
+      console.log(answer);
+      connection.query("SELECT * FROM products WHERE id='" + answer.id + "'"), function (err, res) {
+        if (err) throw err;
+        console.log(res);
+
+        // switch (answer.id) {
+        //   case "View all products":
+        //     displayProduct();
+        //     break;
+
+        //   case "Search for product by ID and view quantity available":
+        //     searchProduct();
+        //     break;
+      };
+    });
+//END of the connection.
+// connection.end();
+  }
