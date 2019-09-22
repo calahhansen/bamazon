@@ -80,7 +80,14 @@ function searchProduct() {
   }])  //Need to do something about the user input...parse or something to make sure that it's a number
     .then(function (answer) {
       console.log(answer); //it works! 
-      connection.query("SELECT ")
+      connection.query("SELECT * FROM products WHERE id="+answer.id, function (err, res) {
+        if(err) throw err;
+        if (res) {
+          console.log(res); // res works but struggling to dig down and grab just the stock_quantity result
+          console.log("Quantity Available for purchase: " + res[res.stock_quantity]);
+          askUser(); // need to ask User again to see if they would like to go back and display all products to look for something else or go back and Order product.
+        }
+      })
     })
 
 }
@@ -100,10 +107,11 @@ function orderProduct() {
     message: "How many items would you like to purchase?"
   }])  //Need to do something about the user input...parse or parse int or something to make sure that it's a number
     .then(function (answer) { //or do I need to parse the answer...
-      // console.log(answer);  //it works!
-      connection.query("SELECT * FROM products", function (err, res) {
-        if (err) throw err; //appears to not be a MySQL error but more like an error on the next line??
-        if (res[answer].stock_quantity < answer.stock_quantity) { //throwing error - cannot read property of 'stock_quantity' of undefined....how do i write this to describe that I want the results number of the answer.stock_quanity??
+      console.log(answer);  //it works!
+      connection.query("SELECT * FROM products WHERE id="+answer.id, function (err, res) {
+        console.log(res);
+        if (err) throw err; //appears to not be a MySQL error but more like an error on the next line?? ASK FOR HELP
+        if (answer.amount < res.stock_quantity) { //throwing error - cannot read property of 'stock_quantity' of undefined
           console.log("Insufficient quantity!");
         }
         else if (res[answer.stock_quantity] >= answer.stock_quantity) { //SUPER GUESSING and not working!! ASK TA's or tutor
