@@ -1,12 +1,13 @@
 ###BAMAZON with Node.js & MySQL
 
 #Overview of BAMAZON
+<br>
 I created an Amazon-like storefront with the MySQL skills learned in this unit. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, the app can track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
 For data input and storage, the app requires MySQL and Inquirer npm packages in the files.
-
-#Links and Sources:
-[Link to "How-to" Video for Customers](#)
-[Github Repository Link](https://github.com/calahhansen/bamazon)
+<br>
+#Links and Sources:<br>
+[Link to "How-to" Video for Customers](#)<br>
+[Github Repository Link](https://github.com/calahhansen/bamazon)<br>
 
 #Customer View Description
 
