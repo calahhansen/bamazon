@@ -80,11 +80,11 @@ function searchProduct() {
   }])  //Need to do something about the user input...parse or something to make sure that it's a number
     .then(function (answer) {
       console.log(answer); //it works! 
-      connection.query("SELECT * FROM products WHERE id="+answer.id, function (err, res) {
-        if(err) throw err;
+      connection.query("SELECT * FROM products WHERE id=" + answer.id, function (err, res) {
+        if (err) throw err;
         if (res) {
-          console.log(res); // res works but struggling to dig down and grab just the stock_quantity result
-          console.log("Quantity Available for purchase: " + res[res.stock_quantity]);
+          // console.log(res); // res works but struggling to dig down and grab just the stock_quantity result
+          console.log("Quantity Available for purchase: " + res[0].stock_quantity);
           askUser(); // need to ask User again to see if they would like to go back and display all products to look for something else or go back and Order product.
         }
       })
@@ -108,21 +108,25 @@ function orderProduct() {
   }])  //Need to do something about the user input...parse or parse int or something to make sure that it's a number
     .then(function (answer) { //or do I need to parse the answer...
       console.log(answer);  //it works!
-      connection.query("SELECT * FROM products WHERE id="+answer.id, function (err, res) {
+      connection.query("SELECT * FROM products WHERE id=" + answer.id, function (err, res) {
         console.log(res);
         if (err) throw err; //appears to not be a MySQL error but more like an error on the next line?? ASK FOR HELP
-        if (answer.amount < res.stock_quantity) { //throwing error - cannot read property of 'stock_quantity' of undefined
+        if (parseInt(answer.amount) > res[0].stock_quantity) { //throwing error - cannot read property of 'stock_quantity' of undefined
           console.log("Insufficient quantity!");
+          askUser();
         }
-        else if (res[answer.stock_quantity] >= answer.stock_quantity) { //SUPER GUESSING and not working!! ASK TA's or tutor
-          console.log("Thanks for your order! Your purchase total is: $" + answer.stock_quantity * answer.price)
+        else {
+          // console.log("hello");
           connection.query("UPDATE products SET ? WHERE ?", [{
-            stock_quantity: res[answer.stock_quantity] - answer.stock_quantity
+            stock_quantity: res[0].stock_quantity - parseInt(answer.amount)
           }, {
-            id: IDsearch  //no idea how to do the update thing....can I pull out the "Update" seperate to get that working
+            id: answer.id
           }],
-            function (err, res) {
+            function (err, res2) {
               if (err) throw err;
+              // console.log(res2);
+              console.log("Thanks for your order! Your purchase total is: $" + (answer.amount * res[0].price))
+              askUser();
             });
         }
       }
